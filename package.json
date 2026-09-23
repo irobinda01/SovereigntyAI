@@ -1,0 +1,31 @@
+{
+  "name": "sovereignty-ai",
+  "version": "1.0.0",
+  "description": "Run unit tests on this project.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "vitest run",
+    "test:report": "vitest run -- --coverage --costs",
+    "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\"",
+    "check": "clarinet check",
+    "deploy:testnet": "tsx scripts/deploy-testnet.ts",
+    "deploy:testnet:dry-run": "tsx scripts/deploy-testnet.ts --dry-run",
+    "verify:testnet": "tsx scripts/verify-testnet.ts",
+    "inspect": "tsx scripts/inspect-contracts.ts",
+    "bootstrap:testnet": "tsx scripts/bootstrap-testnet.ts",
+    "acceptance:testnet": "tsx scripts/acceptance-testnet.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@stacks/clarinet-sdk": "^3.24.0",
+    "@types/node": "^24.4.0",
+    "@stacks/transactions": "^7.2.0",
+    "chokidar-cli": "^3.0.0",
+    "tsx": "^4.23.0",
+    "vitest": "^3.2.4",
+    "vitest-environment-clarinet": "^3.0.2",
+    "@stacks/wallet-sdk": "^7.2.0"
+  }
+}

@@ -1,0 +1,58 @@
+[project]
+name = "sovereignty-ai"
+description = "SovereigntyAI — non-custodial, AI-assisted autonomous STX + sBTC treasury protocol on Stacks. AI decides. Clarity enforces. You retain custody."
+authors = []
+telemetry = false
+cache_dir = "./.cache"
+
+[[project.requirements]]
+contract_id = "SN3VMHXEN64ZZF71JQ5VESXDWTR301XTTXGF4J8F1.sbtc-token"
+
+[contracts.sip-010-trait-v4]
+path = "contracts/sip-010-trait-v4.clar"
+clarity_version = 3
+epoch = "latest"
+
+[contracts.strategy-trait-v4]
+path = "contracts/strategy-trait-v4.clar"
+clarity_version = 3
+epoch = "latest"
+
+[contracts.sovereignty-protocol-admin-v4]
+path = "contracts/sovereignty-protocol-admin-v4.clar"
+clarity_version = 3
+epoch = "latest"
+
+[contracts.agent-registry-v4]
+path = "contracts/agent-registry-v4.clar"
+clarity_version = 3
+epoch = "latest"
+
+[contracts.strategy-registry-v6]
+path = "contracts/strategy-registry-v6.clar"
+clarity_version = 3
+epoch = "latest"
+
+[contracts.receipt-token-v7]
+path = "contracts/receipt-token-v7.clar"
+clarity_version = 3
+epoch = "latest"
+
+[contracts.risk-guard-v7]
+path = "contracts/risk-guard-v7.clar"
+clarity_version = 3
+epoch = "latest"
+
+[contracts.sovereignty-vault-v7]
+path = "contracts/sovereignty-vault-v7.clar"
+clarity_version = 3
+epoch = "latest"
+
+[contracts.execution-engine-v7]
+path = "contracts/execution-engine-v7.clar"
+clarity_version = 3
+epoch = "latest"
+
+[repl.analysis]
+passes = ["check_checker"]
+check_checker = { trusted_sender = false, trusted_caller = false, callee_filter = false }

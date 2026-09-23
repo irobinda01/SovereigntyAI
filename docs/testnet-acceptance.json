@@ -1,0 +1,72 @@
+{
+  "ranAt": "2026-09-23T20:10:53.090Z",
+  "deployer": "ST1YBHMDH6ESJ1DBY8MK72XER9BG9646QMCS610PE",
+  "secondWallet": "ST3X2ZDK8FYSKGZKQXAP1D69AS39C9X11QES2VPYX",
+  "vaults": {
+    "A": "2",
+    "B": "3",
+    "C": "4"
+  },
+  "txs": [
+    {
+      "step": "create-vault \"Conservative Treasury\"",
+      "txid": "0x6a0f577dac9ff8afdd13a35d665b7942b701237987a77bbb12fc8a84743eaae3",
+      "status": "success",
+      "detail": "(ok u2)"
+    },
+    {
+      "step": "create-vault \"Business Treasury\"",
+      "txid": "0x4a26e688a487c7834b97ef5e521d26b091b6c757789af893cb420941dd9a9bc3",
+      "status": "success",
+      "detail": "(ok u3)"
+    },
+    {
+      "step": "create-vault \"DAO Treasury\"",
+      "txid": "0x35536f8542c09648542f05de6c322ce21fe11fdb0f0f78b9ffba584295c3d6f9",
+      "status": "success",
+      "detail": "(ok u4)"
+    },
+    {
+      "step": "deposit-stx A",
+      "txid": "0xc94113de5083ad463ff30bb44837716fc55f6e86deb9afda4e69d62707a976e1",
+      "status": "success",
+      "detail": "(ok u2000000)"
+    },
+    {
+      "step": "deposit-stx C (deployer 3 STX)",
+      "txid": "0xa2cda3e1d52d9ec2efe55c6818290f2fcfe2ae14ceee2755090ef98bf90bc121",
+      "status": "success",
+      "detail": "(ok u3000000)"
+    },
+    {
+      "step": "deposit-stx C (second wallet 1 STX)",
+      "txid": "0x121eee23a22d432237d2246d421bc1f42b5e37fe8a53a00d4bf2251e533d0456",
+      "status": "success",
+      "detail": "(ok u1000000)"
+    },
+    {
+      "step": "deposit-stx A by non-owner (must be rejected: owner-only vault)",
+      "txid": "0xfb8bae6c097232da323f6cf7a9c4813d6afdcbf1f1e3d18f88fd753b3e4c1990",
+      "status": "abort_by_post_condition",
+      "detail": "(err u113)"
+    },
+    {
+      "step": "deposit-sbtc B",
+      "txid": "0x03618d47e706558519f2e29d01d636071f039eadc63388519facfc2b5f279de6",
+      "status": "success",
+      "detail": "(ok u100000)"
+    },
+    {
+      "step": "redeem-stx A",
+      "txid": "0x8a26a9984f3d4003812aaae93cf4475b94d4b5c78adc4bbe1c7650698b790238",
+      "status": "success",
+      "detail": "(ok u1000000)"
+    },
+    {
+      "step": "redeem-sbtc B",
+      "txid": "0x39cd32e039bdd845d8fa522ce02a40b2667bb56a1ec7df2854b4945d78b48c78",
+      "status": "success",
+      "detail": "(ok u100000)"
+    }
+  ]
+}

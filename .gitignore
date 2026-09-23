@@ -1,0 +1,30 @@
+
+**/settings/Mainnet.toml
+**/settings/Testnet.toml
+.cache/**
+history.txt
+
+logs
+*.log
+npm-debug.log*
+coverage
+*.info
+costs-reports.json
+node_modules
+
+# environment secrets — never commit
+.env
+.env.local
+.env.*.local
+apps/web/.env.local
+agent/.env
+
+# deployment plans record real testnet addresses/txids per-run; the
+# committed source of truth is docs/deployment.md, updated manually
+# after a verified deploy
+deployments/default.testnet-plan.yaml
+
+# build outputs
+apps/web/.next/
+apps/web/out/
+dist/

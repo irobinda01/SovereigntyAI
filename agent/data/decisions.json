@@ -1,0 +1,279 @@
+[
+  {
+    "vaultId": 4,
+    "vaultContract": "ST1YBHMDH6ESJ1DBY8MK72XER9BG9646QMCS610PE.sovereignty-vault-v7",
+    "network": "testnet",
+    "asset": "STX",
+    "recommendation": {
+      "vaultId": 4,
+      "asset": "STX",
+      "generatedAt": "2026-09-23T22:14:05.034Z",
+      "decision": "HOLD",
+      "reason": "No active STX strategy is registered in the strategy-registry on this network, so the protocol correctly maintains all STX in idle state rather than allocating to an unapproved destination.",
+      "expectedBenefit": "Preserves all 4,000,000 microSTX in vault idle balance, maintaining full liquidity and avoiding allocation to unregistered strategies.",
+      "riskAssessment": "Idle balance of 4,000,000 microSTX (100% of total) exceeds the minimum idle requirement of 2,000 bps (20%), keeping the vault within configured safety parameters.",
+      "confidence": 1
+    },
+    "currentAllocation": {
+      "idleBps": 10000,
+      "strategies": []
+    },
+    "proposedAllocation": null,
+    "intent": null,
+    "intentHash": null,
+    "validation": null,
+    "status": "RECOMMENDED",
+    "execution": {
+      "state": "NOT_APPLICABLE",
+      "txId": null
+    },
+    "rejectionReason": null,
+    "id": "0da42d1f-17e5-4eb2-9a9e-8b58f98e2da3",
+    "timestamp": "2026-09-23T22:14:07.231Z"
+  },
+  {
+    "vaultId": 2,
+    "vaultContract": "ST1YBHMDH6ESJ1DBY8MK72XER9BG9646QMCS610PE.sovereignty-vault-v7",
+    "network": "testnet",
+    "asset": "STX",
+    "recommendation": {
+      "vaultId": 2,
+      "asset": "STX",
+      "generatedAt": "2026-09-23T22:09:42.305Z",
+      "decision": "HOLD",
+      "reason": "No active STX strategy is registered in the strategy-registry on this network, so there is no approved destination to allocate idle funds. The vault correctly holds all STX in idle state.",
+      "expectedBenefit": "Preserves all 1,000,000 microSTX in vault idle balance, maintaining full liquidity and avoiding allocation to unapproved destinations.",
+      "riskAssessment": "Idle balance of 100% exceeds the configured minimum idle threshold of 20%, ensuring the vault stays within governance constraints while awaiting strategy activation.",
+      "confidence": 1
+    },
+    "currentAllocation": {
+      "idleBps": 10000,
+      "strategies": []
+    },
+    "proposedAllocation": null,
+    "intent": null,
+    "intentHash": null,
+    "validation": null,
+    "status": "RECOMMENDED",
+    "execution": {
+      "state": "NOT_APPLICABLE",
+      "txId": null
+    },
+    "rejectionReason": null,
+    "id": "5390eb17-ab75-494c-b517-474e413a2798",
+    "timestamp": "2026-09-23T22:09:44.852Z"
+  },
+  {
+    "vaultId": 4,
+    "vaultContract": "ST1YBHMDH6ESJ1DBY8MK72XER9BG9646QMCS610PE.sovereignty-vault-v7",
+    "network": "testnet",
+    "asset": "STX",
+    "recommendation": {
+      "vaultId": 4,
+      "asset": "STX",
+      "generatedAt": "2026-09-23T21:12:52.189Z",
+      "decision": "HOLD",
+      "reason": "No active STX strategy is registered in the strategy-registry on this network. Without an approved destination, all idle STX must remain in the vault.",
+      "expectedBenefit": "Preserves the full vault balance of 4,000,000 microSTX in a safe, liquid state until an approved strategy becomes available.",
+      "riskAssessment": "Idle balance of 4,000,000 microSTX meets the configured minimum idle requirement (2,000 bps), keeping the vault within all exposure and safety limits.",
+      "confidence": 1
+    },
+    "currentAllocation": {
+      "idleBps": 10000,
+      "strategies": []
+    },
+    "proposedAllocation": null,
+    "intent": null,
+    "intentHash": null,
+    "validation": null,
+    "status": "RECOMMENDED",
+    "execution": {
+      "state": "NOT_APPLICABLE",
+      "txId": null
+    },
+    "rejectionReason": null,
+    "id": "c12438c4-e39a-4d60-8925-016042df5755",
+    "timestamp": "2026-09-23T21:12:54.732Z"
+  },
+  {
+    "vaultId": 3,
+    "vaultContract": "ST1YBHMDH6ESJ1DBY8MK72XER9BG9646QMCS610PE.sovereignty-vault-v7",
+    "network": "testnet",
+    "asset": "SBTC",
+    "recommendation": {
+      "vaultId": 3,
+      "asset": "SBTC",
+      "generatedAt": "2026-09-23T20:37:10.527Z",
+      "decision": "HOLD",
+      "reason": "The vault currently holds zero sBTC, so there is no capital available to deploy to any strategy at this time.",
+      "expectedBenefit": "Holding until the vault receives sBTC deposits preserves the vault's readiness to allocate capital according to its configured strategy once funds are available.",
+      "riskAssessment": "No positions are active, so all configured limits (max exposure 30%, max slippage 0.5%, min idle 20%) are satisfied trivially.",
+      "confidence": 1
+    },
+    "currentAllocation": null,
+    "proposedAllocation": null,
+    "intent": null,
+    "intentHash": null,
+    "validation": null,
+    "status": "RECOMMENDED",
+    "execution": {
+      "state": "NOT_APPLICABLE",
+      "txId": null
+    },
+    "rejectionReason": null,
+    "id": "a79c5a62-71e5-445b-9e80-c93aa46855a5",
+    "timestamp": "2026-09-23T20:37:12.964Z"
+  },
+  {
+    "vaultId": 2,
+    "vaultContract": "ST1YBHMDH6ESJ1DBY8MK72XER9BG9646QMCS610PE.sovereignty-vault-v7",
+    "network": "testnet",
+    "asset": "STX",
+    "recommendation": {
+      "vaultId": 2,
+      "asset": "STX",
+      "generatedAt": "2026-09-23T20:37:02.265Z",
+      "decision": "HOLD",
+      "reason": "No active STX strategy is registered in the strategy-registry on this network, so there is no approved destination for allocation. The vault correctly holds all STX idle.",
+      "expectedBenefit": "Maintains full liquidity and eliminates counterparty risk by keeping 1,000,000 microSTX in vault idle balance until an active strategy becomes available.",
+      "riskAssessment": "Idle balance of 100% exceeds the minimum idle requirement of 20% (2000 bps), ensuring the vault remains within all configured safety limits.",
+      "confidence": 1
+    },
+    "currentAllocation": {
+      "idleBps": 10000,
+      "strategies": []
+    },
+    "proposedAllocation": null,
+    "intent": null,
+    "intentHash": null,
+    "validation": null,
+    "status": "RECOMMENDED",
+    "execution": {
+      "state": "NOT_APPLICABLE",
+      "txId": null
+    },
+    "rejectionReason": null,
+    "id": "02990170-52db-4bd8-b292-9751e17812f5",
+    "timestamp": "2026-09-23T20:37:04.666Z"
+  },
+  {
+    "vaultId": 2,
+    "asset": "STX",
+    "recommendation": {
+      "vaultId": 2,
+      "asset": "STX",
+      "generatedAt": "2026-09-23T18:00:34.023Z",
+      "decision": "HOLD",
+      "reason": "Autonomous execution is not enabled for this vault, so the decision to hold STX cannot execute automatically. Manual submission by the vault owner is required to proceed.",
+      "expectedBenefit": "Holding the current STX position preserves the vault's existing exposure without incurring transaction costs or slippage.",
+      "riskAssessment": "The vault remains within its configured maximum exposure limit of 3000 bps while awaiting owner action to enable autonomous mode or manually confirm the hold decision.",
+      "confidence": 0
+    },
+    "intent": null,
+    "intentHash": null,
+    "txId": null,
+    "status": "recommendation-only",
+    "rejectionReason": null,
+    "id": "1685ae67-dfba-4225-847d-50c7f80f98e1",
+    "timestamp": "2026-09-23T18:00:36.613Z"
+  },
+  {
+    "vaultId": 1,
+    "asset": "SBTC",
+    "recommendation": {
+      "vaultId": 1,
+      "asset": "SBTC",
+      "generatedAt": "2026-09-23T13:18:20.862Z",
+      "decision": "HOLD",
+      "reason": "Autonomous execution is disabled for this vault, so the system cannot autonomously process transactions. A manual review and owner submission is required to proceed.",
+      "expectedBenefit": "Holding the current SBTC position preserves the vault's existing balance without incurring transaction costs or slippage.",
+      "riskAssessment": "No action is taken, so exposure remains within the configured 30% maximum and no slippage is incurred.",
+      "confidence": 0
+    },
+    "intent": null,
+    "intentHash": null,
+    "txId": null,
+    "status": "recommendation-only",
+    "rejectionReason": null,
+    "id": "6276ca7f-fdf7-49c0-807c-157b3dd754a8",
+    "timestamp": "2026-09-23T13:18:23.226Z"
+  },
+  {
+    "vaultId": 1,
+    "asset": "STX",
+    "recommendation": {
+      "vaultId": 1,
+      "asset": "STX",
+      "generatedAt": "2026-09-23T13:18:05.759Z",
+      "decision": "HOLD",
+      "reason": "Autonomous execution is disabled for this vault, so the decision to hold the STX position requires manual owner approval rather than automatic execution.",
+      "expectedBenefit": "Holding the STX position preserves the current 2,000,000 microSTX balance while awaiting owner direction or market conditions.",
+      "riskAssessment": "The vault remains fully idle with 100% of its balance in STX, within the configured 30% max exposure limit and no active strategy allocations.",
+      "confidence": 0
+    },
+    "intent": null,
+    "intentHash": null,
+    "txId": null,
+    "status": "recommendation-only",
+    "rejectionReason": null,
+    "id": "3710a92b-61f0-4200-ab66-7b9636a55db9",
+    "timestamp": "2026-09-23T13:18:08.238Z"
+  },
+  {
+    "vaultId": 1,
+    "recommendation": {
+      "vaultId": 1,
+      "generatedAt": "2026-09-23T12:17:43.375Z",
+      "decision": "HOLD",
+      "reason": "Autonomous execution is not enabled for this vault, so no action can be taken without manual approval from the owner.",
+      "expectedBenefit": "The vault maintains its current position while awaiting owner authorization to proceed with any strategy changes.",
+      "riskAssessment": "No execution risk since no transaction is being submitted; all risk parameters remain within configured limits while in HOLD state.",
+      "confidence": 0
+    },
+    "intent": null,
+    "intentHash": null,
+    "txId": null,
+    "status": "recommendation-only",
+    "rejectionReason": null,
+    "id": "fd6a30e1-bdfa-4f0b-9ffc-4d6b449befab",
+    "timestamp": "2026-09-23T12:17:45.390Z"
+  },
+  {
+    "vaultId": 1,
+    "recommendation": {
+      "vaultId": 1,
+      "generatedAt": "2026-09-23T12:17:03.818Z",
+      "decision": "HOLD",
+      "reason": "Autonomous execution is not enabled for this vault. The AI can only produce a recommendation for manual review; the owner must submit it themselves or enable autonomous mode.",
+      "expectedBenefit": "n/a",
+      "riskAssessment": "No funds can move without the owner's own signature while autonomous mode is off.",
+      "confidence": 0
+    },
+    "intent": null,
+    "intentHash": null,
+    "txId": null,
+    "status": "recommendation-only",
+    "rejectionReason": null,
+    "id": "8796a42e-d17b-45ef-ac01-681b7e85fc4e",
+    "timestamp": "2026-09-23T12:17:06.658Z"
+  },
+  {
+    "vaultId": 1,
+    "recommendation": {
+      "vaultId": 1,
+      "generatedAt": "2026-09-23T12:16:04.124Z",
+      "decision": "HOLD",
+      "reason": "Autonomous execution is not enabled for this vault. The AI can only produce a recommendation for manual review; the owner must submit it themselves or enable autonomous mode.",
+      "expectedBenefit": "n/a",
+      "riskAssessment": "No funds can move without the owner's own signature while autonomous mode is off.",
+      "confidence": 0
+    },
+    "intent": null,
+    "intentHash": null,
+    "txId": null,
+    "status": "recommendation-only",
+    "rejectionReason": null,
+    "id": "7c7b1ea9-90e4-4460-96ae-e2ccc1167656",
+    "timestamp": "2026-09-23T12:16:07.078Z"
+  }
+]
