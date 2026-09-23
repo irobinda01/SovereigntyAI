@@ -9,10 +9,12 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.128.0",
     "@stacks/connect": "^8.2.7",
     "@stacks/network": "^7.0.2",
     "@stacks/transactions": "^7.2.0",
     "clsx": "^2.1.1",
+    "dotenv": "^16.6.1",
     "next": "16.3.6",
     "react": "19.2.8",
     "react-dom": "19.2.8",

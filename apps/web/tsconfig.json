@@ -19,7 +19,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@anthropic-ai/sdk": ["./node_modules/@anthropic-ai/sdk"],
+      "@stacks/transactions": ["./node_modules/@stacks/transactions"]
     }
   },
   "include": [
