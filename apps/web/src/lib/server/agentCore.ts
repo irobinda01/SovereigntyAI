@@ -1,5 +1,6 @@
 import "server-only";
 import { existsSync, readFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { getAddressFromPrivateKey } from "@stacks/transactions";
 
@@ -50,7 +51,11 @@ async function init(): Promise<Core> {
   fill("SBTC_CONTRACT_NAME", process.env.NEXT_PUBLIC_SBTC_CONTRACT_NAME);
   fill("ANTHROPIC_API_KEY", agentEnv.ANTHROPIC_API_KEY);
   fill("INTENT_DEADLINE_WINDOW_BLOCKS", agentEnv.INTENT_DEADLINE_WINDOW_BLOCKS);
-  fill("AGENT_DATA_DIR", join(agentDir, "data"));
+  // Serverless (Vercel/Lambda) deploys are read-only except the OS temp dir, so the decision log
+  // goes there: it lives only as long as the function instance. That is acceptable because the
+  // log is observability only (see agent/src/store.ts); the chain is the source of truth.
+  const serverless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+  fill("AGENT_DATA_DIR", serverless ? join(tmpdir(), "sovereignty-agent") : join(agentDir, "data"));
 
   if (!process.env.EXECUTOR_ADDRESS) {
     const network = process.env.NEXT_PUBLIC_NETWORK === "mainnet" ? "mainnet" : "testnet";
