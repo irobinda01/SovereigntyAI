@@ -36,6 +36,7 @@ type Core = {
   chat: typeof import("../../../../../agent/src/chat/chatHandler");
   analysis: typeof import("../../../../../agent/src/analysis/strategyAnalysis");
   protocols: typeof import("../../../../../agent/src/data/ecosystemProtocols");
+  poolAnalysis: typeof import("../../../../../agent/src/analysis/poolStrategyAnalysis");
 };
 
 let core: Promise<Core> | null = null;
@@ -74,15 +75,16 @@ async function init(): Promise<Core> {
     }
   }
 
-  const [pipeline, store, state, chat, analysis, protocols] = await Promise.all([
+  const [pipeline, store, state, chat, analysis, protocols, poolAnalysis] = await Promise.all([
     import("../../../../../agent/src/pipeline"),
     import("../../../../../agent/src/store"),
     import("../../../../../agent/src/data/protocolState"),
     import("../../../../../agent/src/chat/chatHandler"),
     import("../../../../../agent/src/analysis/strategyAnalysis"),
     import("../../../../../agent/src/data/ecosystemProtocols"),
+    import("../../../../../agent/src/analysis/poolStrategyAnalysis"),
   ]);
-  return { pipeline, store, state, chat, analysis, protocols };
+  return { pipeline, store, state, chat, analysis, protocols, poolAnalysis };
 }
 
 /** Lazily loads the agent core once per server process. A failed init is not cached, so the next request retries. */

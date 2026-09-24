@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useVault } from "@/components/vault/VaultContext";
-import { getRecommendation, getVaultDecisions, type DecisionRecord } from "@/lib/agent";
+import { analyzePoolAgainstEcosystem, getRecommendation, getVaultDecisions, type DecisionRecord, type PoolEcosystemAnalysis } from "@/lib/agent";
 import { ASSET_LABEL, bpsToPct, formatAsset } from "@/lib/amounts";
 import { vaultAssets } from "@/lib/derive";
 import { explorerTxUrl } from "@/lib/config";
@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/Button";
 import { Card, CardBody } from "@/components/ui/Card";
 import { EmptyState } from "@/components/EmptyState";
 import { ExecutionBadge, IntentStatusBadge, OffChainTag } from "@/components/ui/StatusBadges";
+import { PoolEcosystemAnalysisView } from "@/components/vault/PoolEcosystemAnalysis";
 import { RecommendationView } from "@/components/vault/RecommendationView";
 import { AutonomousModeNotice, TestnetExecutionBanner } from "@/components/vault/TestnetGate";
 
@@ -23,7 +24,9 @@ export default function RecommendationsPage() {
   const [historyError, setHistoryError] = useState<string | null>(null);
   const [running, setRunning] = useState<Asset | null>(null);
   const [latest, setLatest] = useState<DecisionRecord | null>(null);
+  const [analysis, setAnalysis] = useState<PoolEcosystemAnalysis | null>(null);
   const [runError, setRunError] = useState<string | null>(null);
+  const [guardrailError, setGuardrailError] = useState<string | null>(null);
 
   const loadHistory = useCallback(async () => {
     try {
@@ -42,15 +45,22 @@ export default function RecommendationsPage() {
   async function run(asset: Asset) {
     setRunning(asset);
     setRunError(null);
-    try {
-      const res = await getRecommendation(vaultId, asset);
-      setLatest(res.record);
+    setGuardrailError(null);
+    setAnalysis(null);
+    setLatest(null);
+    // Two independent, read-only checks; a failure in one must not hide the other.
+    //  1. the pool vs the REAL ecosystem protocols (the analysis shown first)
+    //  2. the vault-rules recommendation, validated against the deployed contracts (also logged to history)
+    const [eco, rec] = await Promise.allSettled([analyzePoolAgainstEcosystem(vaultId, asset), getRecommendation(vaultId, asset)]);
+    if (eco.status === "fulfilled") setAnalysis(eco.value);
+    else setRunError(eco.reason instanceof Error ? eco.reason.message : "AI agent unavailable.");
+    if (rec.status === "fulfilled") {
+      setLatest(rec.value.record);
       await loadHistory();
-    } catch (e) {
-      setRunError(e instanceof Error ? e.message : "AI agent unavailable.");
-    } finally {
-      setRunning(null);
+    } else {
+      setGuardrailError(rec.reason instanceof Error ? rec.reason.message : "AI agent unavailable.");
     }
+    setRunning(null);
   }
 
   return (
@@ -65,9 +75,9 @@ export default function RecommendationsPage() {
               <OffChainTag />
             </div>
             <p className="mt-2 text-sm text-muted">
-              The agent reads this vault&apos;s real on-chain state, proposes an action if one fits your limits, builds a structured
-              intent, and has the deployed contracts validate it (a read-only call - no transaction, no fee).{" "}
-              <strong>It never signs or submits anything.</strong>
+              The agent reads this pool&apos;s real on-chain state and compares it with the real Stacks ecosystem protocols (live
+              contract checks and live TVL), ranked within your own risk limits. It also has the deployed contracts check a proposed
+              move (read-only). <strong>It only analyses: nothing is executed, signed or submitted, and your vault does not change.</strong>
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               {assets.map((a) => (
@@ -87,7 +97,19 @@ export default function RecommendationsPage() {
         <AutonomousModeNotice risk={overview.risk} environment={overview.environment} />
       </div>
 
-      {latest && <RecommendationView record={latest} overview={overview} />}
+      {analysis && <PoolEcosystemAnalysisView analysis={analysis} />}
+
+      {guardrailError && (
+        <p className="text-xs text-danger">
+          The vault-rules check could not run: {guardrailError}. The ecosystem analysis above is unaffected.
+        </p>
+      )}
+      {latest && (
+        <section className="space-y-3">
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted">Vault rules check</h2>
+          <RecommendationView record={latest} overview={overview} />
+        </section>
+      )}
 
       <section>
         <h2 className="text-sm font-semibold uppercase tracking-wider text-muted">Recommendation history</h2>

@@ -7,6 +7,7 @@ import { getProtocolContext, getVaultSnapshot } from "./data/protocolState";
 import { Asset } from "./types";
 import { ECOSYSTEM_PROTOCOLS, getProtocol, verifyProtocolContract } from "./data/ecosystemProtocols";
 import { analyzeProtocol } from "./analysis/strategyAnalysis";
+import { analyzePoolAgainstEcosystem } from "./analysis/poolStrategyAnalysis";
 import { getStxPrice, getProtocolTvl } from "./data/marketData";
 import { streamChat, ChatMessage } from "./chat/chatHandler";
 
@@ -64,6 +65,22 @@ app.post("/api/vaults/:vaultId/recommendation", async (req, res) => {
   try {
     const { recommendation, record } = await runRecommendation(Number(req.params.vaultId), asset);
     res.json(serializeBigints({ recommendation, recordId: record.id, record }));
+  } catch (err) {
+    res.status(502).json({ error: String(err) });
+  }
+});
+
+// Compares one asset pool against the real Mainnet ecosystem protocols using
+// live-verified facts and the vault's own limits. Analysis only - creates no
+// intent, writes no decision record, signs and submits nothing.
+app.post("/api/vaults/:vaultId/pool-analysis", async (req, res) => {
+  const asset = parseAsset(req, res);
+  if (!asset) return;
+  try {
+    const ctx = await getProtocolContext();
+    const vault = await getVaultSnapshot(Number(req.params.vaultId), asset, ctx);
+    if (!vault) return res.status(404).json({ error: "Vault not found on-chain" });
+    res.json(await analyzePoolAgainstEcosystem(vault, ctx, config.network));
   } catch (err) {
     res.status(502).json({ error: String(err) });
   }

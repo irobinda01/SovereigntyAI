@@ -112,3 +112,55 @@ export function getVaultDecisions(vaultId: number) {
 export function getAllDecisions() {
   return agentFetch<DecisionRecord[]>("/api/decisions");
 }
+
+// ---- Pool analysis against the real Mainnet ecosystem (analysis only; mirrors
+// agent/src/analysis/poolStrategyAnalysis.ts). Nothing here is ever executed.
+
+export interface StrategyEvaluation {
+  protocolId: string;
+  name: string;
+  category: string;
+  website: string;
+  plainSummary: string;
+  /** true = deployed, false = not found, null = could not be checked right now. */
+  contractLive: boolean | null;
+  contractId: string;
+  tvlUsd: number | null;
+  assetSupported: boolean;
+  riskTier: 1 | 2 | 3;
+  riskLabel: "Lower" | "Moderate" | "Higher";
+  riskNote: string;
+  rank: number | null;
+  verdict: "CANDIDATE" | "EXCLUDED";
+  reasons: string[];
+  hypotheticalAllocation: { amount: string; bpsOfPool: number; shareOfProtocolTvlPct: number | null } | null;
+}
+
+export interface PoolEcosystemAnalysis {
+  vaultId: number;
+  asset: Asset;
+  network: "testnet" | "mainnet";
+  generatedAt: string;
+  pool: {
+    totalBalance: string;
+    idleBalance: string;
+    idleBps: number;
+    maxExposureBps: number;
+    minIdleBps: number;
+    maxTxAmount: string;
+    maxDeployable: string;
+  };
+  blockers: string[];
+  stxPriceUsd: number | null;
+  strategies: StrategyEvaluation[];
+  topPickId: string | null;
+  summary: string;
+  limitations: string[];
+  executed: false;
+  executionNote: string;
+}
+
+/** Compares this pool with the real Mainnet ecosystem protocols. Analysis only - never signs, submits or changes the vault. */
+export function analyzePoolAgainstEcosystem(vaultId: number, asset: Asset) {
+  return agentFetch<PoolEcosystemAnalysis>(`/api/vaults/${vaultId}/pool-analysis?asset=${asset}`, { method: "POST" });
+}
