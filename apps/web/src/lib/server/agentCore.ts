@@ -33,6 +33,9 @@ type Core = {
   pipeline: typeof import("../../../../../agent/src/pipeline");
   store: typeof import("../../../../../agent/src/store");
   state: typeof import("../../../../../agent/src/data/protocolState");
+  chat: typeof import("../../../../../agent/src/chat/chatHandler");
+  analysis: typeof import("../../../../../agent/src/analysis/strategyAnalysis");
+  protocols: typeof import("../../../../../agent/src/data/ecosystemProtocols");
 };
 
 let core: Promise<Core> | null = null;
@@ -49,6 +52,8 @@ async function init(): Promise<Core> {
   fill("DEPLOYER_ADDRESS", process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS);
   fill("SBTC_CONTRACT_ADDRESS", process.env.NEXT_PUBLIC_SBTC_CONTRACT_ADDRESS);
   fill("SBTC_CONTRACT_NAME", process.env.NEXT_PUBLIC_SBTC_CONTRACT_NAME);
+  // On a deployed host (Vercel) ANTHROPIC_API_KEY comes from the project's environment variables;
+  // agent/.env only exists in a local checkout.
   fill("ANTHROPIC_API_KEY", agentEnv.ANTHROPIC_API_KEY);
   fill("INTENT_DEADLINE_WINDOW_BLOCKS", agentEnv.INTENT_DEADLINE_WINDOW_BLOCKS);
   // Serverless (Vercel/Lambda) deploys are read-only except the OS temp dir, so the decision log
@@ -69,12 +74,15 @@ async function init(): Promise<Core> {
     }
   }
 
-  const [pipeline, store, state] = await Promise.all([
+  const [pipeline, store, state, chat, analysis, protocols] = await Promise.all([
     import("../../../../../agent/src/pipeline"),
     import("../../../../../agent/src/store"),
     import("../../../../../agent/src/data/protocolState"),
+    import("../../../../../agent/src/chat/chatHandler"),
+    import("../../../../../agent/src/analysis/strategyAnalysis"),
+    import("../../../../../agent/src/data/ecosystemProtocols"),
   ]);
-  return { pipeline, store, state };
+  return { pipeline, store, state, chat, analysis, protocols };
 }
 
 /** Lazily loads the agent core once per server process. A failed init is not cached, so the next request retries. */

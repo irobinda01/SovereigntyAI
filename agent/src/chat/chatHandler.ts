@@ -1,11 +1,21 @@
 import Anthropic from "@anthropic-ai/sdk";
-import type { Response } from "express";
 import { config } from "../config";
 import { Asset } from "../types";
 import { getProtocolContext, getVaultSnapshot } from "../data/protocolState";
 import { ECOSYSTEM_PROTOCOLS } from "../data/ecosystemProtocols";
 
 const MODEL = "claude-haiku-4-5-20251001";
+
+/**
+ * The minimal writable stream streamChat needs. Express's `Response` satisfies it
+ * structurally, and so does the adapter the web app's /api/chat route builds
+ * around a ReadableStream, so the same handler runs standalone and in-process.
+ */
+export interface ChatSink {
+  writeHead(status: number, headers: Record<string, string>): unknown;
+  write(chunk: string): unknown;
+  end(): unknown;
+}
 
 export interface ChatMessage {
   role: "user" | "assistant";
@@ -46,7 +56,7 @@ function buildContextBlock(vault: unknown, protocolCtx: unknown, asset: Asset | 
  * live reads on every request, never cached or assumed stale-safe.
  */
 export async function streamChat(
-  res: Response,
+  res: ChatSink,
   messages: ChatMessage[],
   vaultId: number | null,
   asset: Asset | null
@@ -63,7 +73,7 @@ export async function streamChat(
   };
 
   if (!config.anthropicApiKey) {
-    send("error", { message: "AI chat is not configured on this agent instance (no ANTHROPIC_API_KEY)." });
+    send("error", { message: "AI chat is not configured: ANTHROPIC_API_KEY is not set (on Vercel, add it under Project Settings > Environment Variables and redeploy)." });
     res.end();
     return;
   }

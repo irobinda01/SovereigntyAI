@@ -1,5 +1,3 @@
-import { AGENT_URL } from "./config";
-
 export interface EcosystemProtocol {
   id: string;
   name: string;
@@ -48,8 +46,9 @@ export interface StxMarketData {
   ageSeconds?: number;
 }
 
+// Same-origin: served by this app's own /api routes, which run the agent's code in-process.
 async function agentFetch<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${AGENT_URL}${path}`, { ...init, cache: "no-store" });
+  const res = await fetch(path, { ...init, cache: "no-store" });
   const body = await res.json().catch(() => null);
   if (!res.ok) throw new Error(body?.error || `AI agent returned HTTP ${res.status}`);
   return body as T;

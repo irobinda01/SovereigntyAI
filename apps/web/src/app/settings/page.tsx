@@ -6,7 +6,7 @@ import { useMyVaults } from "@/hooks/useMyVaults";
 import { EmptyState } from "@/components/EmptyState";
 import { Card, CardHeader, CardBody, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { DEPLOYER_ADDRESS, NETWORK, STACKS_API_URL, SBTC_CONTRACT_ID, AGENT_URL, contractId, isProtocolConfigured } from "@/lib/config";
+import { DEPLOYER_ADDRESS, NETWORK, STACKS_API_URL, SBTC_CONTRACT_ID, contractId, isProtocolConfigured } from "@/lib/config";
 import { bpsToPct } from "@/lib/amounts";
 import { modeLabel, purposeById } from "@/lib/presets";
 
@@ -36,7 +36,6 @@ export default function SettingsPage() {
               <ConfigRow label="Execution engine" value={contractId("execution-engine")} />
             </>
           )}
-          <ConfigRow label="AI agent" value={AGENT_URL} />
         </CardBody>
       </Card>
 

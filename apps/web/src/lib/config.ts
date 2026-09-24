@@ -11,7 +11,6 @@ export const SBTC_CONTRACT_ID = `${SBTC_CONTRACT_ADDRESS}.${SBTC_CONTRACT_NAME}`
 // live contract interface: fungible_tokens = [sbtc-token, sbtc-token-locked]).
 // Needed to express the sBTC transfer as a post-condition.
 export const SBTC_ASSET_NAME = "sbtc-token";
-export const AGENT_URL = process.env.NEXT_PUBLIC_AGENT_URL || "http://localhost:4021";
 
 export const EXPLORER_BASE = "https://explorer.hiro.so";
 

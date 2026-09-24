@@ -1,5 +1,3 @@
-import { AGENT_URL } from "./config";
-
 export interface ChatMessage {
   role: "user" | "assistant";
   content: string;
@@ -20,7 +18,7 @@ interface StreamChatOptions {
  * support POST bodies, which we need to send the conversation history).
  */
 export async function streamChat(messages: ChatMessage[], opts: StreamChatOptions): Promise<void> {
-  const res = await fetch(`${AGENT_URL}/api/chat`, {
+  const res = await fetch("/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ messages, vaultId: opts.vaultId, asset: opts.asset }),

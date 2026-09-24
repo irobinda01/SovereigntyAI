@@ -152,14 +152,19 @@ read + analysis) but `/api/vaults/:id/execute` will reject with a clear
 ## Running the analysis without the standalone agent
 
 The web app's server routes run this same pipeline **in-process** (`apps/web/src/lib/server/agentCore.ts` loads `agent/src`), so
-"Run AI analysis" and the recommendation history work with only the web app running:
+Everything AI in the web app - "Run AI analysis", the recommendation history, the chat widget and the ecosystem protocol analysis - runs in the web server itself, so it works with only the web app running (including on Vercel):
 
 | Route | Purpose |
 |---|---|
 | `POST /api/vaults/:id/recommendation?asset=STX|SBTC` | recommendation -> intent -> on-chain read-only validation -> gate (never signs) |
 | `GET /api/vaults/:id/decisions`, `GET /api/decisions` | the agent's off-chain decision log |
+| `POST /api/chat` | chat assistant, streamed as Server-Sent Events (needs `ANTHROPIC_API_KEY`) |
+| `POST /api/ecosystem/strategies/:id/analyze` | AI analysis of one ecosystem protocol from live-verified facts |
 
 Configuration is bridged from the web app's `NEXT_PUBLIC_*` settings plus, optionally, `agent/.env` (`ANTHROPIC_API_KEY` for Claude wording;
 `EXECUTOR_ADDRESS`, or an address derived from `EXECUTOR_PRIVATE_KEY`, used only to evaluate intents as the executor). The private key itself is never
-loaded into the web process. The standalone agent (`agent/`, port 4021) is still used by the chat widget and the AI protocol analysis, and both
-processes share `agent/data/decisions.json`. The agent's relative imports are extensionless (bundler resolution) so the web bundler can load them.
+loaded into the web process. The standalone agent (`agent/`, port 4021) is now optional: the web app no longer calls it. Locally both processes share `agent/data/decisions.json`;
+on Vercel (read-only filesystem) the web app keeps its decision log in the OS temp dir, which lasts only as long as the function instance.
+
+On Vercel set these environment variables: `NEXT_PUBLIC_DEPLOYER_ADDRESS` (required), `NEXT_PUBLIC_NETWORK`, `NEXT_PUBLIC_STACKS_API_URL`, and `ANTHROPIC_API_KEY`
+(server-side, not `NEXT_PUBLIC_`; needed for chat and Claude-written wording). Optionally `EXECUTOR_ADDRESS`. The agent's relative imports are extensionless (bundler resolution) so the web bundler can load them.
